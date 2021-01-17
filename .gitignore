@@ -23,14 +23,13 @@
 #optional eslint cache
 .eslintcache
 
-### Node ###
 # Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-### Sass ###
+# Sass
 .sass-cache/
 *.css.map
 *.sass.map
