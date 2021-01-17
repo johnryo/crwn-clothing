@@ -1,4 +1,4 @@
-import HomePage from './homepage';
+import HomePage from './pages/homepage/homepage';
 import './App.css';
 
 function App() {
