@@ -11,6 +11,14 @@
   right: 40px;
   z-index: 5;
 
+  .empty-message {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 50px auto;
+    letter-spacing: 0.5px;
+  }
+
   .cart-items {
     height: 240px;
     display: flex;
