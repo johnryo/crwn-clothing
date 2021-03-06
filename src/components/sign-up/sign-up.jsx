@@ -1,8 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import FormInput from '../form-input/form-input';
 import CustomButton from '../custom-button/custom-button';
+
+import { signUpStart } from '../../redux/user/user.actions';
+
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
-import './sign-up.scss';
+
+import { SignUpContainer, SignUpTitle } from './sign-up.styles';
 
 class SignUp extends React.Component {
   constructor() {
@@ -18,7 +24,7 @@ class SignUp extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-
+    const { signUpStart } = this.props;
     const { displayName, email, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
@@ -26,20 +32,7 @@ class SignUp extends React.Component {
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    signUpStart({ displayName, email, password });
   };
 
   handleChange = event => {
@@ -51,8 +44,8 @@ class SignUp extends React.Component {
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
     return (
-      <div className='sign-up'>
-        <h2 className='title'>I do not have an account</h2>
+      <SignUpContainer>
+        <SignUpTitle>I do not have an account</SignUpTitle>
         <span>Sign up with your email and password</span>
         <form
           className='sign-up-form'
@@ -92,9 +85,13 @@ class SignUp extends React.Component {
           />
           <CustomButton type='submit'>SIGN UP</CustomButton>
         </form>
-      </div>
+      </SignUpContainer>
     );
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
