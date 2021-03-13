@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -10,14 +9,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'))
-}
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 
